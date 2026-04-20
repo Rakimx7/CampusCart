@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCart — Checkout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─── GLOBAL ─── */
+    :root {
+      --bg: #080808; --bg2: #0f0f0f; --bg3: #151515; --bg4: #1c1c1c;
+      --border: #252525; --border2: #2e2e2e;
+      --text: #f0f0f0; --text2: #888; --text3: #555;
+      --primary: #e8ff47; --primary-dim: rgba(232,255,71,0.12);
+      --accent: #00e5a0; --danger: #ff4d4d;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    /* ─── HEADER ─── */
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 5%; height: 64px;
+      background: rgba(8,8,8,0.96); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px);
+    }
+    .logo { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; letter-spacing: 2px; color: var(--primary); text-decoration: none; }
+    .logo span { color: var(--text2); }
+    .btn-sm { background: none; border: 1px solid var(--border2); color: var(--text2); padding: 7px 16px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-family: inherit; transition: all 0.2s; }
+    .btn-sm:hover { border-color: var(--primary); color: var(--primary); }
+    .nav-chip { background: var(--bg3); border: 1px solid var(--border); padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; color: var(--text2); }
+    .nav-chip strong { color: var(--primary); }
+
+    /* ─── CHECKOUT ─── */
+    .co-wrap { max-width: 1000px; margin: 40px auto; padding: 0 5%; display: grid; grid-template-columns: 1fr 360px; gap: 32px; }
+    @media(max-width:700px){ .co-wrap { grid-template-columns: 1fr; } }
+    .co-title { font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; margin-bottom: 24px; }
+    .co-title span { color: var(--primary); }
+    .co-section { background: var(--bg3); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 20px; }
+    .co-section h4 { font-size: 0.85rem; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 18px; font-family: var(--mono); }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.78rem; color: var(--text2); margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--bg4); border: 1px solid var(--border2); color: var(--text); padding: 10px 14px; border-radius: 8px; font-family: inherit; font-size: 0.9rem; outline: none; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .meetup-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .meetup-opt { background: var(--bg4); border: 1px solid var(--border2); border-radius: 8px; padding: 14px; cursor: pointer; transition: all 0.2s; text-align: left; font-family: inherit; color: var(--text); }
+    .meetup-opt:hover, .meetup-opt.selected { border-color: var(--primary); background: var(--primary-dim); }
+    .meetup-opt .mo-loc { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+    .meetup-opt .mo-hint { font-size: 0.72rem; color: var(--text3); }
+
+    .co-summary { background: var(--bg3); border: 1px solid var(--border); border-radius: 14px; padding: 24px; height: fit-content; position: sticky; top: 84px; }
+    .co-summary h4 { font-size: 0.85rem; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; font-family: var(--mono); }
+    .co-item { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 8px; color: var(--text2); }
+    .co-item span:last-child { font-family: var(--mono); color: var(--text); }
+    .co-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+    .co-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1rem; }
+    .co-total span:last-child { font-family: var(--mono); color: var(--primary); font-size: 1.2rem; }
+    .co-savings { background: var(--accent-dim); border: 1px solid rgba(0,229,160,0.2); border-radius: 8px; padding: 12px; margin-top: 16px; font-size: 0.8rem; color: var(--accent); text-align: center; }
+    .btn-place { width: 100%; background: var(--primary); color: #000; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 700; font-family: inherit; margin-top: 20px; transition: all 0.2s; }
+    .btn-place:hover { background: #d4e840; transform: translateY(-1px); }
+    .back-link { display: inline-block; margin-top: 12px; color: var(--text2); text-decoration: none; font-size: 0.8rem; }
+    .back-link:hover { color: var(--primary); }
+
+    .toast { position: fixed; bottom: 28px; right: 28px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; z-index: 999; transform: translateY(80px); opacity: 0; transition: all 0.3s; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="logo">CAMPUS<span>CART</span></a>
+  <div style="display:flex; gap:12px;">
+    <div class="nav-chip" id="user-chip">👤 <strong id="header-user">Guest</strong></div>
+    <button class="btn-sm" onclick="window.location.href='marketplace.html'">← Back to Shop</button>
+  </div>
+</header>
+
+<!-- CHECKOUT FORM -->
+<div class="co-wrap">
+  <div>
+    <div class="co-title">CHECK<span>OUT</span></div>
+
+    <!-- Contact -->
+    <div class="co-section">
+      <h4>📋 Contact Information</h4>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" id="co-name" placeholder="Juan dela Cruz"></div>
+        <div class="form-group"><label>Student ID</label><input type="text" id="co-sid" placeholder="2021-XXXXX"></div>
+      </div>
+      <div class="form-group"><label>School Email</label><input type="email" id="co-email" placeholder="you@student.edu.ph"></div>
+    </div>
+
+    <!-- Meetup -->
+    <div class="co-section">
+      <h4>📍 Campus Meetup (AI Recommended)</h4>
+      <p style="font-size:0.8rem; color:var(--text2); margin-bottom:16px;">Choose a safe, well-lit campus location.</p>
+      <div class="meetup-opts" id="meetup-opts">
+        <div class="meetup-opt selected" data-loc="Library Lobby, Ground Floor" onclick="selectMeetup(this)">
+          <div class="mo-loc">📚 Library Lobby</div>
+          <div class="mo-hint">Ground Floor · Always staffed</div>
+        </div>
+        <div class="meetup-opt" data-loc="Student Center Entrance" onclick="selectMeetup(this)">
+          <div class="mo-loc">🏫 Student Center</div>
+          <div class="mo-hint">Main Entrance · High traffic</div>
+        </div>
+        <div class="meetup-opt" data-loc="Cafeteria, Building A" onclick="selectMeetup(this)">
+          <div class="mo-loc">🍽️ Cafeteria</div>
+          <div class="mo-hint">Building A · 7AM–7PM</div>
+        </div>
+        <div class="meetup-opt" data-loc="Security Office Frontage" onclick="selectMeetup(this)">
+          <div class="mo-loc">🔒 Security Office</div>
+          <div class="mo-hint">Safest option · 24/7</div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:16px;"><label>Preferred Date & Time</label><input type="datetime-local" id="co-datetime"></div>
+    </div>
+
+    <!-- Payment -->
+    <div class="co-section">
+      <h4>💳 Payment Method</h4>
+      <div class="form-group">
+        <select id="co-pay">
+          <option value="cash">💵 Cash on Meetup</option>
+          <option value="gcash">📱 GCash</option>
+          <option value="maya">💳 Maya</option>
+        </select>
+      </div>
+      <div class="form-group" id="co-gcash-field" style="display:none;"><label>GCash / Maya Number</label><input type="text" placeholder="09XXXXXXXXX"></div>
+    </div>
+
+    <button class="btn-place" onclick="placeOrder()">🎉 Place Order</button>
+    <a href="marketplace.html" class="back-link">← Return to Marketplace</a>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="co-summary">
+    <h4>🛍️ Order Summary</h4>
+    <div id="co-items-list"></div>
+    <hr class="co-divider">
+    <div class="co-total"><span>Total</span><span id="co-total-val">₱0</span></div>
+    <div class="co-savings" id="co-savings-box">🌿 You're saving <strong id="co-savings-amt">₱0</strong> vs. buying new!</div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ─── LOAD CART & USER ────────────────────────
+  const cart = JSON.parse(localStorage.getItem('campus_cart')) || [];
+  const currentUser = JSON.parse(localStorage.getItem('campus_current_user')) || null;
+
+  // Pre-fill user info if logged in
+  if (currentUser) {
+    document.getElementById('header-user').textContent = currentUser.name.split(' ')[0];
+    document.getElementById('co-name').value = currentUser.name || '';
+    document.getElementById('co-email').value = currentUser.email || '';
+  } else {
+    document.getElementById('header-user').textContent = 'Guest';
+  }
+
+  // Redirect if cart empty
+  if (cart.length === 0) {
+    showToast('🛒 Your cart is empty. Redirecting to marketplace...');
+    setTimeout(() => { window.location.href = 'marketplace.html'; }, 2000);
+  }
+
+  // Render order summary
+  function renderSummary() {
+    const list = document.getElementById('co-items-list');
+    const totalEl = document.getElementById('co-total-val');
+    const savingsEl = document.getElementById('co-savings-amt');
+    let total = 0, origTotal = 0;
+    list.innerHTML = cart.map(item => {
+      total += item.price;
+      origTotal += item.origPrice || item.price * 2; // fallback origPrice
+      return `<div class="co-item"><span>${item.emoji} ${item.name}</span><span>₱${item.price.toLocaleString()}</span></div>`;
+    }).join('');
+    const savings = origTotal - total;
+    totalEl.textContent = '₱' + total.toLocaleString();
+    savingsEl.textContent = '₱' + savings.toLocaleString();
+  }
+  renderSummary();
+
+  // Meetup selection
+  let selectedMeetup = 'Library Lobby, Ground Floor';
+  function selectMeetup(el) {
+    document.querySelectorAll('.meetup-opt').forEach(opt => opt.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedMeetup = el.dataset.loc;
+  }
+
+  // GCash/Maya field toggle
+  const paySelect = document.getElementById('co-pay');
+  paySelect.addEventListener('change', function() {
+    const gcashField = document.getElementById('co-gcash-field');
+    gcashField.style.display = (this.value === 'gcash' || this.value === 'maya') ? 'block' : 'none';
+  });
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // Place order
+  function placeOrder() {
+    const name = document.getElementById('co-name').value.trim();
+    const sid = document.getElementById('co-sid').value.trim();
+    const email = document.getElementById('co-email').value.trim();
+    const datetime = document.getElementById('co-datetime').value;
+    const payMethod = paySelect.value;
+
+    if (!name || !sid || !email) {
+      showToast('⚠️ Please fill in all contact fields.');
+      return;
+    }
+
+    // Build order details
+    const total = cart.reduce((s, c) => s + c.price, 0);
+    const origTotal = cart.reduce((s, c) => s + (c.origPrice || c.price * 2), 0);
+    const savings = origTotal - total;
+    const dtStr = datetime ? new Date(datetime).toLocaleString('en-PH', {dateStyle:'medium', timeStyle:'short'}) : 'To be arranged';
+    const payLabels = { cash:'Cash on Meetup', gcash:'GCash', maya:'Maya' };
+
+    const orderDetails = {
+      name, sid, email, meetup: selectedMeetup, datetime: dtStr, payment: payLabels[payMethod],
+      total, savings, items: cart.length, orderId: 'CC-' + Math.floor(Math.random()*90000+10000)
+    };
+    localStorage.setItem('campus_last_order', JSON.stringify(orderDetails));
+
+    // Clear cart
+    localStorage.removeItem('campus_cart');
+    // Redirect to success page
+    window.location.href = 'success.html';
+  }
+</script>
+</body>
+</html>

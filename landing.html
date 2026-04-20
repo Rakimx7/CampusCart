@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCart — Pitch Deck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─── GLOBAL ─── */
+    :root {
+      --bg: #080808; --bg2: #0f0f0f; --bg3: #151515; --bg4: #1c1c1c;
+      --border: #252525; --border2: #2e2e2e;
+      --text: #f0f0f0; --text2: #888; --text3: #555;
+      --primary: #e8ff47; --primary-dim: rgba(232,255,71,0.12); --primary-dim2: rgba(232,255,71,0.05);
+      --accent: #00e5a0; --accent-dim: rgba(0,229,160,0.1);
+      --danger: #ff4d4d; --mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* ─── HEADER ─── */
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 5%; height: 64px;
+      background: rgba(8,8,8,0.96); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px);
+    }
+    .logo { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; letter-spacing: 2px; color: var(--primary); cursor: pointer; text-decoration: none; }
+    .logo span { color: var(--text2); }
+    nav a { margin: 0 14px; text-decoration: none; color: var(--text2); font-size: 0.83rem; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: var(--primary); }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .btn-sm { background: none; border: 1px solid var(--border2); color: var(--text2); padding: 7px 16px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-family: inherit; transition: all 0.2s; }
+    .btn-sm:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-sm-primary { background: var(--primary); color: #000; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 700; font-family: inherit; transition: all 0.2s; }
+    .btn-sm-primary:hover { background: #d4e840; transform: translateY(-1px); }
+    .nav-user { display: flex; align-items: center; gap: 10px; }
+    .nav-chip { background: var(--bg3); border: 1px solid var(--border); padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; color: var(--text2); }
+    .nav-chip strong { color: var(--primary); }
+    .btn-cart { background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-family: inherit; display: flex; align-items: center; gap: 6px; transition: all 0.2s; text-decoration: none; }
+    .btn-cart:hover { border-color: var(--primary); }
+    .cart-badge { background: var(--primary); color: #000; border-radius: 10px; padding: 1px 6px; font-size: 0.65rem; font-weight: 800; display: none; }
+
+    /* ─── HERO ─── */
+    .hero { min-height: calc(100vh - 64px); display: flex; align-items: center; padding: 0 5%; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(232,255,71,0.04) 0%, transparent 60%); }
+    .hero-content { position: relative; z-index: 1; max-width: 640px; }
+    .eyebrow { font-family: var(--mono); font-size: 0.7rem; color: var(--primary); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; }
+    h1 { font-family: 'Bebas Neue', cursive; font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.95; letter-spacing: 3px; }
+    h1 .hl { color: var(--primary); }
+    .hero p { margin-top: 24px; font-size: 1rem; color: var(--text2); line-height: 1.7; max-width: 480px; }
+    .hero-actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-xl { padding: 15px 34px; border-radius: 8px; font-size: 0.93rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.25s; text-decoration: none; display: inline-block; }
+    .btn-xl-p { background: var(--primary); color: #000; border: none; }
+    .btn-xl-p:hover { background: #d4e840; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,255,71,0.25); }
+    .btn-xl-g { background: none; color: var(--text); border: 1px solid var(--border2); }
+    .btn-xl-g:hover { border-color: var(--text); }
+    .hero-float { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 340px; background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: none; }
+    @media(min-width:900px){ .hero-float { display: block; } }
+    .hero-float-title { font-size: 0.7rem; font-family: var(--mono); color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+    .mini-card { background: var(--bg4); border: 1px solid var(--border); border-radius: 10px; padding: 12px; display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+    .mini-card-emoji { font-size: 1.8rem; flex-shrink: 0; }
+    .mini-card-name { font-size: 0.85rem; font-weight: 600; }
+    .mini-card-price { font-size: 0.78rem; color: var(--primary); font-family: var(--mono); }
+    .mini-card-cat { font-size: 0.65rem; color: var(--text3); }
+
+    /* ─── SECTIONS ─── */
+    .section { padding: 80px 5%; }
+    .section-label { font-family: var(--mono); font-size: 0.68rem; color: var(--primary); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
+    .section-title { font-family: 'Bebas Neue', cursive; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: 2px; margin-bottom: 14px; }
+    .section-sub { color: var(--text2); font-size: 0.95rem; line-height: 1.7; max-width: 560px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 48px; }
+    .stat-box { background: var(--bg2); padding: 32px 28px; }
+    .stat-num { font-family: 'Bebas Neue', cursive; font-size: 3.2rem; letter-spacing: 2px; color: var(--primary); line-height: 1; }
+    .stat-label { font-size: 0.82rem; color: var(--text2); margin-top: 8px; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+    .feat-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: all 0.25s; }
+    .feat-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(232,255,71,0.07); }
+    .feat-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .feat-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .feat-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+    .comp-table { width: 100%; border-collapse: collapse; margin-top: 40px; font-size: 0.85rem; }
+    .comp-table th { text-align: left; padding: 12px 16px; background: var(--bg3); border-bottom: 1px solid var(--border); color: var(--text2); font-weight: 600; font-size: 0.78rem; }
+    .comp-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .comp-table tr:hover td { background: var(--bg2); }
+    .comp-table .hl-col { color: var(--primary); font-weight: 600; }
+    .check { color: var(--accent); } .cross { color: var(--danger); } .partial { color: #f5a623; }
+    .roadmap { display: flex; gap: 0; margin-top: 40px; overflow-x: auto; padding-bottom: 8px; }
+    .road-item { flex: 1; min-width: 180px; padding: 24px 20px; border: 1px solid var(--border); border-right: none; }
+    .road-item:first-child { border-radius: 12px 0 0 12px; }
+    .road-item:last-child { border-right: 1px solid var(--border); border-radius: 0 12px 12px 0; }
+    .road-q { font-family: var(--mono); font-size: 0.7rem; color: var(--primary); margin-bottom: 8px; }
+    .road-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; }
+    .road-items { list-style: none; }
+    .road-items li { font-size: 0.78rem; color: var(--text2); margin-bottom: 4px; }
+    .road-items li::before { content: '→ '; color: var(--primary); }
+    .team-cards { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+    .dev-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; gap: 10px; min-width: 190px; }
+    .dev-av { width: 34px; height: 34px; border-radius: 50%; background: var(--primary-dim); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--primary); font-family: var(--mono); }
+    .dev-name { font-size: 0.83rem; font-weight: 600; color: var(--text); }
+    .dev-role { font-size: 0.68rem; color: var(--text3); font-family: var(--mono); }
+    .cta-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 5%; text-align: center; }
+    .cta-section h2 { font-family: 'Bebas Neue', cursive; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: 3px; }
+    .cta-section h2 span { color: var(--primary); }
+    .cta-section p { color: var(--text2); margin: 16px auto 32px; max-width: 480px; line-height: 1.7; }
+    footer { padding: 32px 5%; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-logo { font-family: 'Bebas Neue', cursive; font-size: 1.4rem; color: var(--primary); }
+    .footer-logo span { color: var(--text3); }
+    footer p { font-size: 0.75rem; color: var(--text3); }
+
+    /* ─── MODAL ─── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 400; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; width: 420px; max-width: calc(100vw - 32px); }
+    .modal-tabs { display: flex; border-bottom: 1px solid var(--border); }
+    .modal-tab { flex: 1; padding: 16px; text-align: center; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--text2); background: none; border: none; font-family: inherit; }
+    .modal-tab.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+    .modal-body { padding: 24px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.75rem; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-group input, .form-group select { width: 100%; background: var(--bg4); border: 1px solid var(--border2); color: var(--text); padding: 10px 14px; border-radius: 8px; font-family: inherit; font-size: 0.88rem; outline: none; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+    .err-msg { background: rgba(255,77,77,0.1); border: 1px solid rgba(255,77,77,0.3); border-radius: 6px; padding: 10px 14px; font-size: 0.8rem; color: var(--danger); margin-bottom: 14px; display: none; }
+    .modal-foot { padding: 0 24px 24px; }
+    .btn-full { width: 100%; background: var(--primary); color: #000; border: none; padding: 13px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 700; font-family: inherit; transition: all 0.2s; }
+    .btn-full:hover { background: #d4e840; }
+    .modal-hint { text-align: center; margin-top: 14px; font-size: 0.78rem; color: var(--text3); }
+    .modal-hint a { color: var(--primary); cursor: pointer; text-decoration: none; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 28px; right: 28px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; font-size: 0.85rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all 0.3s ease; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="logo">CAMPUS<span>CART</span></a>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#problem">Problem</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#team">Team</a>
+  </nav>
+  <div class="header-actions" id="nav-guest">
+    <button class="btn-sm" onclick="openAuth('login')">Log In</button>
+    <button class="btn-sm-primary" onclick="openAuth('register')">Sign Up</button>
+  </div>
+  <div id="nav-member" style="display:none" class="nav-user">
+    <div class="nav-chip">Hi, <strong id="nav-name"></strong></div>
+    <a href="marketplace.html" class="btn-cart"><span>🛒</span> Cart <span class="cart-badge" id="cart-count">0</span></a>
+    <button class="btn-sm" onclick="doLogout()">Logout</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="eyebrow">// The Student Marketplace PH needs</div>
+    <h1>BUY & SELL<br><span class="hl">SMARTER,</span><br>CAMPUS-SAFE.</h1>
+    <p>An AI-powered second-hand marketplace built exclusively for Filipino college students. Verified. Safe. Course-specific.</p>
+    <div class="hero-actions">
+      <button class="btn-xl btn-xl-p" onclick="openAuth('register')">Start Saving Now</button>
+      <a href="marketplace.html" class="btn-xl btn-xl-g">Browse Items</a>
+    </div>
+  </div>
+  <div class="hero-float">
+    <div class="hero-float-title">🤖 AI Curated for You — BS ComPE</div>
+    <div class="mini-card"><div class="mini-card-emoji">📚</div><div><div class="mini-card-name">Calculus Textbook</div><div class="mini-card-price">₱280</div><div class="mini-card-cat">Books · UST</div></div></div>
+    <div class="mini-card"><div class="mini-card-emoji">💻</div><div><div class="mini-card-name">Arduino Uno Kit</div><div class="mini-card-price">₱450</div><div class="mini-card-cat">Lab · TUP</div></div></div>
+    <div class="mini-card"><div class="mini-card-emoji">👕</div><div><div class="mini-card-name">Eng'g Uniform Set</div><div class="mini-card-price">₱180</div><div class="mini-card-cat">Uniforms · FEU</div></div></div>
+  </div>
+</section>
+
+<!-- PROBLEM STATS -->
+<section class="section" id="problem">
+  <div class="section-label">// The Problem</div>
+  <div class="section-title">STUDENTS SPEND TOO MUCH.</div>
+  <div class="section-sub">Every semester, Filipino students waste thousands on new supplies — while perfectly good used items are thrown away.</div>
+  <div class="stats-grid">
+    <div class="stat-box"><div class="stat-num">₱8K–15K</div><div class="stat-label">Avg. student spending on supplies per semester</div></div>
+    <div class="stat-box"><div class="stat-num">63%</div><div class="stat-label">Students who had a bad experience on FB Marketplace</div></div>
+    <div class="stat-box"><div class="stat-num">4.7M+</div><div class="stat-label">Filipino college students — our Total Addressable Market</div></div>
+    <div class="stat-box"><div class="stat-num">60%</div><div class="stat-label">Potential savings when buying second-hand on CampusCart</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features" style="background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="section-label">// The Solution</div>
+  <div class="section-title">EVERYTHING STUDENTS NEED.</div>
+  <div class="features-grid">
+    <div class="feat-card"><div class="feat-icon">🤖</div><div class="feat-title">AI-Powered Recommendations</div><div class="feat-desc">Surfaces items filtered by your course, year level, and school.</div></div>
+    <div class="feat-card"><div class="feat-icon">🎓</div><div class="feat-title">Student Verification</div><div class="feat-desc">School email or ID required. Only verified students can transact.</div></div>
+    <div class="feat-card"><div class="feat-icon">💬</div><div class="feat-title">In-App Chat & Meetup</div><div class="feat-desc">Built-in messaging plus campus meetup scheduler. No personal contact sharing.</div></div>
+    <div class="feat-card"><div class="feat-icon">🛡️</div><div class="feat-title">AI Scam Detection</div><div class="feat-desc">Flags suspicious listings before you get victimized.</div></div>
+    <div class="feat-card"><div class="feat-icon">🏷️</div><div class="feat-title">Auto-Tagging & Pricing</div><div class="feat-desc">AI suggests category, keywords, and market price when listing.</div></div>
+    <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-title">Demand Insights</div><div class="feat-desc">See trending items in your campus. Know what to list and when.</div></div>
+  </div>
+</section>
+
+<!-- COMPETITIVE TABLE -->
+<section class="section">
+  <div class="section-label">// Competitive Analysis</div>
+  <div class="section-title">WHY NOT FB MARKETPLACE?</div>
+  <div style="overflow-x:auto; margin-top:40px;">
+    <table class="comp-table">
+      <thead><tr><th>Feature</th><th class="hl-col">CampusCart</th><th>FB Marketplace</th><th>OLX/Carousell</th><th>FB Groups</th></tr></thead>
+      <tbody>
+        <tr><td>Student-Only Access</td><td class="check hl-col">✅</td><td class="cross">❌</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+        <tr><td>AI Course Recommendations</td><td class="check hl-col">✅</td><td class="cross">❌</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+        <tr><td>Scam Detection</td><td class="check hl-col">✅</td><td class="partial">Partial</td><td class="partial">Partial</td><td class="cross">❌</td></tr>
+        <tr><td>Campus Meetup Scheduling</td><td class="check hl-col">✅</td><td class="cross">❌</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+        <tr><td>ID Verification</td><td class="check hl-col">✅</td><td class="cross">❌</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section" id="roadmap" style="background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="section-label">// Launch Roadmap 2026</div>
+  <div class="section-title">SCALING CAMPUS BY CAMPUS.</div>
+  <div class="roadmap">
+    <div class="road-item"><div class="road-q">Q1 2026</div><div class="road-title">Foundation</div><ul class="road-items"><li>Core platform build</li><li>Student verification</li><li>AI recommendation engine</li></ul></div>
+    <div class="road-item"><div class="road-q">Q2 2026</div><div class="road-title">Beta Launch</div><ul class="road-items"><li>UST, FEU, TUP pilots</li><li>Campus ambassador program</li><li>5,000 user target</li></ul></div>
+    <div class="road-item"><div class="road-q">Q3 2026</div><div class="road-title">Monetization</div><ul class="road-items"><li>CampusCart Plus</li><li>5% transaction fee</li><li>Break-even Month 9</li></ul></div>
+    <div class="road-item"><div class="road-q">Q4 2026</div><div class="road-title">Scale</div><ul class="road-items"><li>50,000 users</li><li>Cebu & Davao expansion</li><li>Mobile app launch</li></ul></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" id="team">
+  <div class="section-label">// The Team</div>
+  <div class="section-title">BUILT BY STUDENTS, FOR STUDENTS.</div>
+  <div class="team-cards">
+    <div class="dev-card"><div class="dev-av">LG</div><div><div class="dev-name">Luke Gonzaga</div><div class="dev-role">CEO / Business Lead</div></div></div>
+    <div class="dev-card"><div class="dev-av">RG</div><div><div class="dev-name">Ryan Gatdula</div><div class="dev-role">CTO / Technology Lead</div></div></div>
+    <div class="dev-card"><div class="dev-av">BD</div><div><div class="dev-name">Blue Dualan</div><div class="dev-role">COO / Operations</div></div></div>
+    <div class="dev-card"><div class="dev-av">LR</div><div><div class="dev-name">Lei Reforma</div><div class="dev-role">COO / Operations</div></div></div>
+    <div class="dev-card"><div class="dev-av">CC</div><div><div class="dev-name">Cyrus Companiados</div><div class="dev-role">UI/UX Design Lead</div></div></div>
+    <div class="dev-card"><div class="dev-av">JS</div><div><div class="dev-name">Jeremy Saweran</div><div class="dev-role">UI/UX Design Lead</div></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>READY TO <span>SAVE?</span></h2>
+  <p>Join thousands of Filipino students buying and selling smarter. Sign up free — no fees until your item sells.</p>
+  <button class="btn-xl btn-xl-p" onclick="openAuth('register')">Join CampusCart Free →</button>
+</div>
+
+<footer>
+  <div><div class="footer-logo">CAMPUS<span>CART</span></div></div>
+  <p>© 2026 CampusCart · BS Computer Engineering · Leo Atienza</p>
+  <p>Luke Gonzaga · Ryan Gatdula · Blue Dualan · Lei Reforma · Cyrus Companiados · Jeremy Saweran</p>
+</footer>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">Log In</button>
+      <button class="modal-tab" id="tab-reg" onclick="switchTab('register')">Sign Up</button>
+    </div>
+    <div id="form-login">
+      <div class="modal-body">
+        <div class="err-msg" id="l-err">Invalid email or password.</div>
+        <div class="form-group"><label>School Email</label><input type="email" id="l-em" placeholder="demo@student.com"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="l-pw" placeholder="password123"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn-full" onclick="doLogin()">Log In</button>
+        <p class="modal-hint">Demo: demo@student.com / password123</p>
+      </div>
+    </div>
+    <!-- REGISTER -->
+<div id="form-reg" style="display:none">
+  <div class="modal-body">
+    <div class="err-msg" id="r-err">Please fill all fields.</div>
+    <div class="form-group"><label>Full Name</label><input type="text" id="r-fn" placeholder="Juan dela Cruz"></div>
+    <div class="form-group"><label>School Email</label><input type="email" id="r-em" placeholder="you@student.edu.ph"></div>
+    
+    <!-- NEW: Student ID Verification -->
+    <div class="form-group">
+      <label>Student ID Number</label>
+      <input type="text" id="r-sid" placeholder="2024-XXXXX">
+    </div>
+    <div class="form-group">
+      <label>Upload Student ID (for verification)</label>
+      <div style="display:flex; gap:8px;">
+        <input type="text" placeholder="school_id.jpg" disabled style="background:var(--bg4); flex:1;">
+        <button type="button" class="btn-sm" onclick="showToast('📤 ID upload simulated (prototype)')">Browse</button>
+      </div>
+      <p style="font-size:0.7rem; color:var(--text3); margin-top:4px;">✓ Required for seller verification</p>
+    </div>
+    
+    <div class="form-group"><label>Password</label><input type="password" id="r-pw" placeholder="Create a password"></div>
+    <div class="form-group">
+      <label>Course</label>
+      <select id="r-course">
+        <option value="BS Computer Engineering">BS Computer Engineering</option>
+        <option value="BS Electrical Engineering">BS Electrical Engineering</option>
+        <option value="BS Civil Engineering">BS Civil Engineering</option>
+        <option value="BS Nursing">BS Nursing</option>
+        <option value="BS Architecture">BS Architecture</option>
+        <option value="BS Information Technology">BS Information Technology</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>University</label>
+      <select id="r-uni">
+        <option>Technological University of the Philippines (TUP)</option>
+        <option>University of Santo Tomas (UST)</option>
+        <option>Far Eastern University (FEU)</option>
+        <option>Pamantasan ng Lungsod ng Maynila (PLM)</option>
+        <option>University of the East (UE)</option>
+        <option>De La Salle University (DLSU)</option>
+        <option>Other</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn-full" onclick="doRegister()">Create Account</button>
+    <p class="modal-hint"><a onclick="switchTab('login')">Already have an account? Log in</a></p>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ─── DEMO USERS & LOCALSTORAGE ─────────────────
+  const DEMO_USERS = [
+    { email:'demo@student.com', password:'password123', name:'Juan', course:'BS Computer Engineering', uni:'Technological University of the Philippines (TUP)' }
+  ];
+
+  // Load users from localStorage or init with demo
+  let users = JSON.parse(localStorage.getItem('campus_users')) || DEMO_USERS;
+  localStorage.setItem('campus_users', JSON.stringify(users));
+
+  let currentUser = JSON.parse(localStorage.getItem('campus_current_user')) || null;
+
+  // Update header UI
+  function updateHeader() {
+    const guestNav = document.getElementById('nav-guest');
+    const memberNav = document.getElementById('nav-member');
+    if (currentUser) {
+      guestNav.style.display = 'none';
+      memberNav.style.display = 'flex';
+      document.getElementById('nav-name').textContent = currentUser.name.split(' ')[0];
+    } else {
+      guestNav.style.display = 'flex';
+      memberNav.style.display = 'none';
+    }
+    // Cart badge
+    const cart = JSON.parse(localStorage.getItem('campus_cart')) || [];
+    const badge = document.getElementById('cart-count');
+    if (cart.length > 0) {
+      badge.style.display = 'inline-block';
+      badge.textContent = cart.length;
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // ─── AUTH ─────────────────────────────────────
+  const modal = document.getElementById('auth-modal');
+  function openAuth(tab) {
+    modal.classList.add('open');
+    switchTab(tab);
+  }
+  function closeAuth() { modal.classList.remove('open'); }
+  function switchTab(t) {
+    document.getElementById('tab-login').classList.toggle('active', t==='login');
+    document.getElementById('tab-reg').classList.toggle('active', t==='register');
+    document.getElementById('form-login').style.display = t==='login' ? 'block' : 'none';
+    document.getElementById('form-reg').style.display = t==='register' ? 'block' : 'none';
+  }
+
+  function doLogin() {
+    const em = document.getElementById('l-em').value.trim();
+    const pw = document.getElementById('l-pw').value;
+    const found = users.find(u => u.email === em && u.password === pw);
+    if (found) {
+      currentUser = found;
+      localStorage.setItem('campus_current_user', JSON.stringify(currentUser));
+      updateHeader();
+      closeAuth();
+      showToast('✅ Welcome back, ' + found.name + '!');
+      // REDIRECT TO MARKETPLACE
+      window.location.href = 'marketplace.html';
+    } else {
+      document.getElementById('l-err').style.display = 'block';
+    }
+  }
+
+  function doRegister() {
+  const fn = document.getElementById('r-fn').value.trim();
+  const em = document.getElementById('r-em').value.trim();
+  const pw = document.getElementById('r-pw').value;
+  const sid = document.getElementById('r-sid').value.trim(); // NEW
+  const course = document.getElementById('r-course').value;
+  const uni = document.getElementById('r-uni').value;
+  const errEl = document.getElementById('r-err');
+  if (!fn || !em || !pw || !sid) { errEl.style.display='block'; return; }
+  errEl.style.display = 'none';
+  const newUser = { email:em, password:pw, name:fn, sid, course, uni };
+  users.push(newUser);
+  localStorage.setItem('campus_users', JSON.stringify(users));
+  currentUser = newUser;
+  localStorage.setItem('campus_current_user', JSON.stringify(currentUser));
+  updateHeader();
+  closeAuth();
+  showToast('🎉 Welcome to CampusCart, ' + fn + '!');
+  window.location.href = 'marketplace.html';
+}
+
+  function doLogout() {
+    currentUser = null;
+    localStorage.removeItem('campus_current_user');
+    updateHeader();
+    showToast('👋 Logged out. See you next semester!');
+    // optional: redirect to landing
+  }
+
+  // Check for ?auth= in URL
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('auth') === 'register') {
+    openAuth('register');
+  } else if (params.get('auth') === 'login') {
+    openAuth('login');
+  }
+
+  // Close modal on overlay click
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeAuth(); });
+
+  // Init header
+  updateHeader();
+</script>
+</body>
+</html>
