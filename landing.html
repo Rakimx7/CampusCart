@@ -283,55 +283,55 @@
       </div>
     </div>
     <!-- REGISTER -->
-<div id="form-reg" style="display:none">
-  <div class="modal-body">
-    <div class="err-msg" id="r-err">Please fill all fields.</div>
-    <div class="form-group"><label>Full Name</label><input type="text" id="r-fn" placeholder="Juan dela Cruz"></div>
-    <div class="form-group"><label>School Email</label><input type="email" id="r-em" placeholder="you@student.edu.ph"></div>
-    
-    <!-- NEW: Student ID Verification -->
-    <div class="form-group">
-      <label>Student ID Number</label>
-      <input type="text" id="r-sid" placeholder="2024-XXXXX">
-    </div>
-    <div class="form-group">
-      <label>Upload Student ID (for verification)</label>
-      <div style="display:flex; gap:8px;">
-        <input type="text" placeholder="school_id.jpg" disabled style="background:var(--bg4); flex:1;">
-        <button type="button" class="btn-sm" onclick="showToast('📤 ID upload simulated (prototype)')">Browse</button>
+    <div id="form-reg" style="display:none">
+      <div class="modal-body">
+        <div class="err-msg" id="r-err">Please fill all fields.</div>
+        <div class="form-group"><label>Full Name</label><input type="text" id="r-fn" placeholder="Juan dela Cruz"></div>
+        <div class="form-group"><label>School Email</label><input type="email" id="r-em" placeholder="you@student.edu.ph"></div>
+        <!-- NEW: Student ID Verification -->
+        <div class="form-group">
+          <label>Student ID Number</label>
+          <input type="text" id="r-sid" placeholder="2024-XXXXX">
+        </div>
+        <div class="form-group">
+          <label>Upload Student ID (for verification)</label>
+          <div style="display:flex; gap:8px;">
+            <input type="text" placeholder="school_id.jpg" disabled style="background:var(--bg4); flex:1;">
+            <button type="button" class="btn-sm" onclick="showToast('📤 ID upload simulated (prototype)')">Browse</button>
+          </div>
+          <p style="font-size:0.7rem; color:var(--text3); margin-top:4px;">✓ Required for seller verification</p>
+        </div>
+        <div class="form-group"><label>Password</label><input type="password" id="r-pw" placeholder="Create a password"></div>
+        <div class="form-group">
+          <label>Course</label>
+          <select id="r-course">
+            <option value="BS Computer Engineering">BS Computer Engineering</option>
+            <option value="BS Electrical Engineering">BS Electrical Engineering</option>
+            <option value="BS Civil Engineering">BS Civil Engineering</option>
+            <option value="BS Nursing">BS Nursing</option>
+            <option value="BS Architecture">BS Architecture</option>
+            <option value="BS Information Technology">BS Information Technology</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>University</label>
+          <select id="r-uni">
+            <option>Technological University of the Philippines (TUP)</option>
+            <option>University of Santo Tomas (UST)</option>
+            <option>Far Eastern University (FEU)</option>
+            <option>Pamantasan ng Lungsod ng Maynila (PLM)</option>
+            <option>University of the East (UE)</option>
+            <option>De La Salle University (DLSU)</option>
+            <option>Other</option>
+          </select>
+        </div>
       </div>
-      <p style="font-size:0.7rem; color:var(--text3); margin-top:4px;">✓ Required for seller verification</p>
+      <div class="modal-foot">
+        <button class="btn-full" onclick="doRegister()">Create Account</button>
+        <p class="modal-hint"><a onclick="switchTab('login')">Already have an account? Log in</a></p>
+      </div>
     </div>
-    
-    <div class="form-group"><label>Password</label><input type="password" id="r-pw" placeholder="Create a password"></div>
-    <div class="form-group">
-      <label>Course</label>
-      <select id="r-course">
-        <option value="BS Computer Engineering">BS Computer Engineering</option>
-        <option value="BS Electrical Engineering">BS Electrical Engineering</option>
-        <option value="BS Civil Engineering">BS Civil Engineering</option>
-        <option value="BS Nursing">BS Nursing</option>
-        <option value="BS Architecture">BS Architecture</option>
-        <option value="BS Information Technology">BS Information Technology</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>University</label>
-      <select id="r-uni">
-        <option>Technological University of the Philippines (TUP)</option>
-        <option>University of Santo Tomas (UST)</option>
-        <option>Far Eastern University (FEU)</option>
-        <option>Pamantasan ng Lungsod ng Maynila (PLM)</option>
-        <option>University of the East (UE)</option>
-        <option>De La Salle University (DLSU)</option>
-        <option>Other</option>
-      </select>
-    </div>
-  </div>
-  <div class="modal-foot">
-    <button class="btn-full" onclick="doRegister()">Create Account</button>
-    <p class="modal-hint"><a onclick="switchTab('login')">Already have an account? Log in</a></p>
   </div>
 </div>
 
@@ -413,32 +413,31 @@
   }
 
   function doRegister() {
-  const fn = document.getElementById('r-fn').value.trim();
-  const em = document.getElementById('r-em').value.trim();
-  const pw = document.getElementById('r-pw').value;
-  const sid = document.getElementById('r-sid').value.trim(); // NEW
-  const course = document.getElementById('r-course').value;
-  const uni = document.getElementById('r-uni').value;
-  const errEl = document.getElementById('r-err');
-  if (!fn || !em || !pw || !sid) { errEl.style.display='block'; return; }
-  errEl.style.display = 'none';
-  const newUser = { email:em, password:pw, name:fn, sid, course, uni };
-  users.push(newUser);
-  localStorage.setItem('campus_users', JSON.stringify(users));
-  currentUser = newUser;
-  localStorage.setItem('campus_current_user', JSON.stringify(currentUser));
-  updateHeader();
-  closeAuth();
-  showToast('🎉 Welcome to CampusCart, ' + fn + '!');
-  window.location.href = 'marketplace.html';
-}
+    const fn = document.getElementById('r-fn').value.trim();
+    const em = document.getElementById('r-em').value.trim();
+    const pw = document.getElementById('r-pw').value;
+    const sid = document.getElementById('r-sid').value.trim(); // NEW
+    const course = document.getElementById('r-course').value;
+    const uni = document.getElementById('r-uni').value;
+    const errEl = document.getElementById('r-err');
+    if (!fn || !em || !pw || !sid) { errEl.style.display='block'; return; }
+    errEl.style.display = 'none';
+    const newUser = { email:em, password:pw, name:fn, sid, course, uni };
+    users.push(newUser);
+    localStorage.setItem('campus_users', JSON.stringify(users));
+    currentUser = newUser;
+    localStorage.setItem('campus_current_user', JSON.stringify(currentUser));
+    updateHeader();
+    closeAuth();
+    showToast('🎉 Welcome to CampusCart, ' + fn + '!');
+    window.location.href = 'marketplace.html';
+  }
 
   function doLogout() {
     currentUser = null;
     localStorage.removeItem('campus_current_user');
     updateHeader();
     showToast('👋 Logged out. See you next semester!');
-    // optional: redirect to landing
   }
 
   // Check for ?auth= in URL
