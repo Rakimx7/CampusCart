@@ -181,8 +181,10 @@
     <div class="nav-chip">Hi, <strong id="nav-name"></strong></div>
     <button class="btn-sm" id="plusToggleBtn" onclick="togglePlusSubscription()" style="border-color:#ffd700; color:#ffd700;">⭐ Plus</button>
     <button class="btn-cart" onclick="toggleCart()"><span>🛒</span> Cart <span class="cart-badge" id="cart-count">0</span></button>
-    <!-- 🔒 SELL BUTTON (Premium Only) -->
-    <button class="btn-sm" id="sellItemBtn" onclick="handleSellItemClick()">+ Sell Item</button>
+    <!-- 🔒 SELL BUTTON (PREMIUM ONLY) -->
+    <button class="btn-sm" id="sellItemBtn" onclick="handleSellItemClick()">
+      <span id="sellBtnText">🔒 + Sell Item</span>
+    </button>
     <button class="btn-sm" style="color:var(--danger)" onclick="doLogout()">Logout</button>
   </div>
 </header>
@@ -355,7 +357,8 @@
     if (currentUser) {
       guestNav.style.display = 'none'; memberNav.style.display = 'flex';
       document.getElementById('nav-name').textContent = currentUser.name.split(' ')[0];
-      document.getElementById('ai-course-tag').textContent = currentUser.course + ' · ' + currentUser.uni;
+      const aiTag = document.getElementById('ai-course-tag');
+      aiTag.textContent = currentUser.course + ' · ' + currentUser.uni;
       document.getElementById('mkt-subtitle').textContent = `AI-curated for ${currentUser.course} · ${currentUser.uni}`;
     } else {
       guestNav.style.display = 'flex'; memberNav.style.display = 'none';
@@ -364,12 +367,19 @@
     updateCartBadge();
     updateScamBanner();
     updateHeaderPlusIndicator();
+    updateSellButton(); // lock icon update
   }
 
   function updateCartBadge() {
     const badge = document.getElementById('cart-count');
     if (cart.length > 0) { badge.style.display = 'inline-block'; badge.textContent = cart.length; }
     else { badge.style.display = 'none'; }
+  }
+
+  function updateSellButton() {
+    const btn = document.getElementById('sellBtnText');
+    if (!btn) return;
+    btn.textContent = isPlusSubscriber ? '🏷️ + Sell Item' : '🔒 + Sell Item';
   }
 
   function updateHeaderPlusIndicator() {
@@ -414,7 +424,7 @@
   function togglePlusSubscription() {
     isPlusSubscriber = !isPlusSubscriber;
     localStorage.setItem('campus_plus_subscriber', JSON.stringify(isPlusSubscriber));
-    updateScamBanner(); updateHeaderPlusIndicator(); renderProds();
+    updateScamBanner(); updateHeaderPlusIndicator(); updateSellButton(); renderProds();
     showToast(isPlusSubscriber ? '✨ Plus features activated!' : 'Plus subscription removed (demo)');
   }
 
@@ -422,8 +432,8 @@
     if (!currentUser) { showToast('👋 Please log in to subscribe.'); window.location.href = 'landing.html?auth=login'; return; }
     isPlusSubscriber = true;
     localStorage.setItem('campus_plus_subscriber', JSON.stringify(true));
-    updateScamBanner(); updateHeaderPlusIndicator(); renderProds();
-    showToast('🎉 You are now a CampusCart Plus member! AI Scam Detection enabled.');
+    updateScamBanner(); updateHeaderPlusIndicator(); updateSellButton(); renderProds();
+    showToast('🎉 You are now a CampusCart Plus member! Selling unlocked, AI Scam Detection enabled.');
   }
 
   // ─── 🔒 SELL ITEM (PREMIUM ONLY) ─────────────
