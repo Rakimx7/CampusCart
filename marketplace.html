@@ -107,79 +107,25 @@
     .btn-add:hover { background: #d4e840; }
     .btn-chat { background: none; border: 1px solid var(--border2); color: var(--text2); padding: 7px 12px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; transition: all 0.2s; }
     .btn-chat:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-delete { background: none; border: 1px solid var(--danger); color: var(--danger); padding: 7px 12px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; transition: all 0.2s; }
+    .btn-delete:hover { background: var(--danger); color: #fff; }
     .seller-contact { margin-top: 8px; font-size: 0.75rem; border-top: 1px dashed var(--border); padding-top: 8px; }
-    /* Thumbnail strip */
     .thumb-strip { display: flex; gap: 4px; margin-top: 6px; }
     .thumb-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); }
     .thumb-dot.active { background: var(--primary); }
 
     /* ─── LIGHTBOX ─── */
-    .lightbox-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.92);
-      z-index: 500;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(6px);
-    }
+    .lightbox-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 500; display: none; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
     .lightbox-overlay.open { display: flex; }
-    .lightbox-content {
-      position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-    .lightbox-image {
-      max-width: 100%;
-      max-height: 70vh;
-      border-radius: 16px;
-      object-fit: contain;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.7);
-      transition: opacity 0.2s;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: -40px;
-      right: -40px;
-      background: none;
-      border: none;
-      color: var(--text2);
-      font-size: 2rem;
-      cursor: pointer;
-      z-index: 10;
-    }
-    .lightbox-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.6);
-      border: none;
-      color: white;
-      font-size: 2.5rem;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-    }
+    .lightbox-content { position: relative; max-width: 90vw; max-height: 90vh; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+    .lightbox-image { max-width: 100%; max-height: 70vh; border-radius: 16px; object-fit: contain; box-shadow: 0 16px 48px rgba(0,0,0,0.7); transition: opacity 0.2s; }
+    .lightbox-close { position: absolute; top: -40px; right: -40px; background: none; border: none; color: var(--text2); font-size: 2rem; cursor: pointer; z-index: 10; }
+    .lightbox-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); border: none; color: white; font-size: 2.5rem; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
     .lightbox-arrow:hover { background: rgba(0,0,0,0.85); }
     .lightbox-arrow.left { left: -24px; }
     .lightbox-arrow.right { right: -24px; }
     .lightbox-arrow:disabled { opacity: 0.3; cursor: default; }
-    .lightbox-counter {
-      color: var(--text3);
-      font-size: 0.85rem;
-      margin-top: 12px;
-      font-family: var(--mono);
-    }
+    .lightbox-counter { color: var(--text3); font-size: 0.85rem; margin-top: 12px; font-family: var(--mono); }
 
     /* Cart Drawer */
     .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; display: none; }
@@ -244,16 +190,15 @@
   </style>
 </head>
 <body>
-<!-- HEADER (same) -->
 <header>
   <a href="index.html" class="logo">CAMPUS<span>CART</span></a>
   <nav>
-  <a href="landing.html">Home</a>
-  <a href="landing.html#features">Features</a>
-  <a href="landing.html#roadmap">Roadmap</a>
-  <a href="orders.html">📋 Orders</a>
-  <a href="landing.html#team">Team</a>
-</nav>
+    <a href="landing.html">Home</a>
+    <a href="landing.html#features">Features</a>
+    <a href="landing.html#roadmap">Roadmap</a>
+    <a href="orders.html">📋 Orders</a>
+    <a href="landing.html#team">Team</a>
+  </nav>
   <div class="header-actions" id="nav-guest">
     <button class="btn-sm" onclick="openAuth('login')">Log In</button>
     <button class="btn-sm-primary" onclick="openAuth('register')">Sign Up</button>
@@ -307,10 +252,7 @@
       <div class="form-group"><label>Price (₱)</label><input type="number" id="li-price" placeholder="350"></div>
       <div class="form-group"><label>Condition</label><select id="li-cond"><option>Like New</option><option>Good</option><option>Fair</option></select></div>
       <div class="form-group"><label>Description</label><input type="text" id="li-desc" placeholder="e.g. Minor highlights"></div>
-      <div class="form-group">
-        <label>Images (up to 4)</label>
-        <div class="image-slots" id="image-slots"></div>
-      </div>
+      <div class="form-group"><label>Images (up to 4)</label><div class="image-slots" id="image-slots"></div></div>
       <button class="btn-full" onclick="submitListing()">🚀 List Item</button>
     </div>
   </div>
@@ -337,7 +279,9 @@
 <script>
   // ─── DATA ────────────────────────────────────
   const CAT_ICONS = { books:'📚', electronics:'💻', uniforms:'👕', lab:'🔬', tools:'🔧', misc:'🎒' };
-  let PRODUCTS = [
+  
+  // ✅ LOAD PRODUCTS FROM localStorage (persistent)
+  const DEFAULT_PRODUCTS = [
     { id:1, name:'Calculus by Leithold (7th Ed)', cat:'books', price:280, origPrice:800, emoji:'📗', desc:'Minor highlights, complete.', seller:'Maria S.', uni:'TUP', cond:'Good', sellerEmail:'maria.s@tup.edu.ph', sellerPhone:'+63 912 345 6789' },
     { id:2, name:'Arduino Uno Starter Kit', cat:'lab', price:450, origPrice:1200, emoji:'🤖', desc:'Complete with breadboard, wires.', seller:'Carlo R.', uni:'UST', cond:'Like New', sellerEmail:'carlo.r@ust.edu.ph', sellerPhone:'+63 917 876 5432' },
     { id:3, name:'Engineering Uniform Set (M)', cat:'uniforms', price:180, origPrice:600, emoji:'👔', desc:'White polo + slacks, size M.', seller:'Ana P.', uni:'FEU', cond:'Good', sellerEmail:'ana.p@feu.edu.ph', sellerPhone:'+63 928 111 2222' },
@@ -348,12 +292,17 @@
     { id:8, name:'Engineering Drawing Set', cat:'tools', price:150, origPrice:400, emoji:'✏️', desc:'T-square, compass, protractor.', seller:'Jake T.', uni:'TUP', cond:'Fair', sellerEmail:'jake.t@tup.edu.ph', sellerPhone:'+63 927 888 9999' },
     { id:9, name:'Physics for Scientists (Serway)', cat:'books', price:300, origPrice:900, emoji:'📙', desc:'8th Ed. Lightly annotated.', seller:'Claire N.', uni:'FEU', cond:'Good', sellerEmail:'claire.n@feu.edu.ph', sellerPhone:'+63 915 777 8888' }
   ];
-  let nextId = 10, activeCat = 'all';
+  
+  const STORED = JSON.parse(localStorage.getItem('campus_products'));
+  let PRODUCTS = (STORED && STORED.length > 0) ? STORED : DEFAULT_PRODUCTS;
+  let nextId = PRODUCTS.length > 0 ? Math.max(...PRODUCTS.map(p => p.id)) + 1 : 10;
+  
+  let activeCat = 'all';
   let currentUser = JSON.parse(localStorage.getItem('campus_current_user')) || null;
   let cart = JSON.parse(localStorage.getItem('campus_cart')) || [];
   let isPlusSubscriber = JSON.parse(localStorage.getItem('campus_plus_subscriber')) || false;
   let currentChatSeller = null;
-  let selectedImages = [null, null, null, null]; // up to 4
+  let selectedImages = [null, null, null, null];
 
   // Lightbox state
   let lightboxProduct = null;
@@ -413,11 +362,9 @@
           canvas.getContext('2d').drawImage(img,0,0,w,h);
           resolve(canvas.toDataURL('image/jpeg',0.7));
         };
-        img.onerror=reject;
-        img.src=e.target.result;
+        img.onerror=reject; img.src=e.target.result;
       };
-      reader.onerror=reject;
-      reader.readAsDataURL(file);
+      reader.onerror=reject; reader.readAsDataURL(file);
     });
   }
 
@@ -435,22 +382,13 @@
 
   async function handleSlotUpload(index, event) {
     const file = event.target.files[0]; if(!file) return;
-    try {
-      const dataUrl = await resizeImage(file);
-      selectedImages[index] = dataUrl;
-      const preview = document.getElementById(`preview-${index}`);
-      preview.src = dataUrl; preview.style.display = 'block';
-      document.getElementById(`placeholder-${index}`).style.display = 'none';
-    } catch(err) { showToast('⚠️ Failed to load image.'); }
+    try { const dataUrl = await resizeImage(file); selectedImages[index] = dataUrl; const preview = document.getElementById(`preview-${index}`); preview.src = dataUrl; preview.style.display = 'block'; document.getElementById(`placeholder-${index}`).style.display = 'none'; }
+    catch(err) { showToast('⚠️ Failed to load image.'); }
   }
 
   function clearImages() {
     selectedImages = [null, null, null, null];
-    [0,1,2,3].forEach(i => {
-      const p = document.getElementById(`preview-${i}`); if(p) { p.src=''; p.style.display='none'; }
-      const pl = document.getElementById(`placeholder-${i}`); if(pl) pl.style.display='block';
-      const inp = document.getElementById(`img-input-${i}`); if(inp) inp.value='';
-    });
+    [0,1,2,3].forEach(i => { const p = document.getElementById(`preview-${i}`); if(p) { p.src=''; p.style.display='none'; } const pl = document.getElementById(`placeholder-${i}`); if(pl) pl.style.display='block'; const inp = document.getElementById(`img-input-${i}`); if(inp) inp.value=''; });
   }
 
   function submitListing() {
@@ -463,9 +401,27 @@
     const images = selectedImages.filter(img => img !== null);
     const emojis = { books:'📗', electronics:'💻', uniforms:'👕', lab:'🔬', tools:'🔧', misc:'🎒' };
     PRODUCTS.unshift({ id: nextId++, name, cat, price, origPrice: Math.round(price*2.5), emoji: emojis[cat], desc, cond, seller: currentUser.name, uni: currentUser.uni, sellerEmail: currentUser.email, sellerPhone: '+63 9XX XXX XXXX', images });
+    // ✅ SAVE TO localStorage
+    localStorage.setItem('campus_products', JSON.stringify(PRODUCTS));
     closeListModal();
     document.getElementById('li-name').value=''; document.getElementById('li-price').value=''; document.getElementById('li-desc').value='';
     renderProds(); showToast('🚀 Item listed!');
+  }
+
+  // ─── DELETE PRODUCT (OWNER ONLY) ─────────────────
+  function deleteProduct(id) {
+    if (!currentUser) return;
+    const product = PRODUCTS.find(p => p.id === id);
+    if (!product) return;
+    if (currentUser.name !== product.seller) {
+      showToast('You can only delete your own items.');
+      return;
+    }
+    if (!confirm(`Delete "${product.name}"? This cannot be undone.`)) return;
+    PRODUCTS = PRODUCTS.filter(p => p.id !== id);
+    localStorage.setItem('campus_products', JSON.stringify(PRODUCTS));
+    renderProds();
+    showToast('🗑️ Item deleted.');
   }
 
   // ─── PRODUCT RENDERING ───────────────────────
@@ -484,6 +440,9 @@
       const imgStyle = hasImage ? `background-image: url(${images[0]});` : '';
       const imgClass = hasImage ? 'prod-img has-image' : 'prod-img';
       const thumbDots = images.length > 1 ? `<div class="thumb-strip">${images.map((_,i) => `<div class="thumb-dot ${i===0?'active':''}"></div>`).join('')}</div>` : '';
+      // Check if current user is the seller
+      const isOwner = currentUser && currentUser.name === p.seller;
+      const deleteButton = isOwner ? `<button class="btn-delete" onclick="event.stopPropagation(); deleteProduct(${p.id})">🗑️ Delete</button>` : '';
       return `
       <div class="prod-card">
         <div class="${imgClass}" style="${imgStyle}" onclick="openLightbox(${p.id})">${!hasImage ? p.emoji : ''}</div>
@@ -494,7 +453,11 @@
           <div style="font-size:0.72rem; color:var(--text3); margin-bottom:10px;">Seller: ${p.seller} · ${p.uni}</div>
           <div class="prod-footer">
             <div><div class="prod-price">₱${p.price.toLocaleString()}</div><div style="display:flex;gap:8px;"><div class="prod-orig">₱${p.origPrice.toLocaleString()}</div><div style="font-size:0.65rem;color:var(--accent);">-${pct}%</div></div></div>
-            <div style="display:flex; gap:6px;"><button class="btn-add" onclick="addToCart(${p.id})">🛒 Add</button><button class="btn-chat" onclick="openChatModal(${p.id})">💬 Chat</button></div>
+            <div style="display:flex; gap:6px;">
+              <button class="btn-add" onclick="addToCart(${p.id})">🛒 Add</button>
+              <button class="btn-chat" onclick="openChatModal(${p.id})">💬 Chat</button>
+              ${deleteButton}
+            </div>
           </div>
           ${thumbDots}
           <div class="seller-contact" id="contact-${p.id}">${contactInfo}</div>
@@ -504,56 +467,16 @@
   }
 
   // ─── LIGHTBOX ────────────────────────────────
-  function openLightbox(productId) {
-    const product = PRODUCTS.find(p => p.id === productId);
-    if (!product) return;
-    lightboxProduct = product;
-    const images = product.images || [];
-    if (images.length === 0) {
-      // fallback: show emoji?
-      showToast('No images to display.');
-      return;
-    }
-    lightboxIndex = 0;
-    updateLightboxImage();
-    document.getElementById('lightbox').classList.add('open');
-    // Show/hide arrows
-    document.getElementById('lightbox-prev').style.display = images.length > 1 ? 'flex' : 'none';
-    document.getElementById('lightbox-next').style.display = images.length > 1 ? 'flex' : 'none';
-  }
-
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    lightboxProduct = null;
-  }
-
-  function navigateLightbox(direction) {
-    if (!lightboxProduct) return;
-    const images = lightboxProduct.images || [];
-    if (images.length <= 1) return;
-    lightboxIndex = (lightboxIndex + direction + images.length) % images.length;
-    updateLightboxImage();
-  }
-
-  function updateLightboxImage() {
-    const images = lightboxProduct.images || [];
-    if (images.length === 0) return;
-    const imgElement = document.getElementById('lightbox-img');
-    imgElement.src = images[lightboxIndex];
-    document.getElementById('lightbox-counter').textContent = `${lightboxIndex+1} / ${images.length}`;
-  }
+  function openLightbox(productId) { const product = PRODUCTS.find(p => p.id === productId); if (!product) return; lightboxProduct = product; const images = product.images || []; if (images.length === 0) { showToast('No images to display.'); return; } lightboxIndex = 0; updateLightboxImage(); document.getElementById('lightbox').classList.add('open'); document.getElementById('lightbox-prev').style.display = images.length > 1 ? 'flex' : 'none'; document.getElementById('lightbox-next').style.display = images.length > 1 ? 'flex' : 'none'; }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); lightboxProduct = null; }
+  function navigateLightbox(direction) { if (!lightboxProduct) return; const images = lightboxProduct.images || []; if (images.length <= 1) return; lightboxIndex = (lightboxIndex + direction + images.length) % images.length; updateLightboxImage(); }
+  function updateLightboxImage() { const images = lightboxProduct.images || []; if (images.length === 0) return; document.getElementById('lightbox-img').src = images[lightboxIndex]; document.getElementById('lightbox-counter').textContent = `${lightboxIndex+1} / ${images.length}`; }
 
   // ─── CART ────────────────────────────────────
   function addToCart(id) { if(!currentUser){ showToast('👋 Please log in.'); window.location.href='landing.html?auth=login'; return; } const prod = PRODUCTS.find(p=>p.id===id); if(!prod) return; if(cart.some(c=>c.id===id)){ showToast('⚠️ Already in cart!'); return; } cart.push({...prod}); localStorage.setItem('campus_cart',JSON.stringify(cart)); updateCartBadge(); showToast(`✅ Added: ${prod.name}`); }
   function removeFromCart(id) { cart=cart.filter(c=>c.id!==id); localStorage.setItem('campus_cart',JSON.stringify(cart)); updateCartBadge(); renderCartItems(); }
   function toggleCart() { document.getElementById('cart-overlay').classList.toggle('open'); document.getElementById('cart-drawer').classList.toggle('open'); renderCartItems(); }
-  function renderCartItems() {
-    const list=document.getElementById('cart-items-list'), totalEl=document.getElementById('cart-total'), btn=document.getElementById('btn-checkout');
-    if(cart.length===0){ list.innerHTML='<div class="cart-empty"><div style="font-size:3rem;">🛒</div><div>Your cart is empty.</div></div>'; totalEl.textContent='₱0'; btn.disabled=true; return; }
-    btn.disabled=false; let total=0;
-    list.innerHTML=cart.map(c=>{ total+=c.price; return `<div class="cart-item"><div class="cart-item-emoji">${c.emoji}</div><div class="cart-item-info"><div class="cart-item-name">${c.name}</div><div class="cart-item-price">₱${c.price.toLocaleString()}</div><button class="cart-item-rm" onclick="removeFromCart(${c.id})">Remove</button></div></div>`; }).join('');
-    totalEl.textContent='₱'+total.toLocaleString();
-  }
+  function renderCartItems() { const list=document.getElementById('cart-items-list'), totalEl=document.getElementById('cart-total'), btn=document.getElementById('btn-checkout'); if(cart.length===0){ list.innerHTML='<div class="cart-empty"><div style="font-size:3rem;">🛒</div><div>Your cart is empty.</div></div>'; totalEl.textContent='₱0'; btn.disabled=true; return; } btn.disabled=false; let total=0; list.innerHTML=cart.map(c=>{ total+=c.price; return `<div class="cart-item"><div class="cart-item-emoji">${c.emoji}</div><div class="cart-item-info"><div class="cart-item-name">${c.name}</div><div class="cart-item-price">₱${c.price.toLocaleString()}</div><button class="cart-item-rm" onclick="removeFromCart(${c.id})">Remove</button></div></div>`; }).join(''); totalEl.textContent='₱'+total.toLocaleString(); }
   function goCheckout() { if(cart.length) window.location.href='checkout.html'; }
 
   // ─── CHAT ────────────────────────────────────
