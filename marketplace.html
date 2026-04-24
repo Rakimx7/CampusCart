@@ -6,6 +6,7 @@
   <title>CampusCart — Marketplace</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    /* ─── GLOBAL ─── */
     :root {
       --bg: #080808; --bg2: #0f0f0f; --bg3: #151515; --bg4: #1c1c1c;
       --border: #252525; --border2: #2e2e2e;
@@ -15,8 +16,20 @@
       --danger: #ff4d4d; --mono: 'JetBrains Mono', monospace;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-    header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 64px; background: rgba(8,8,8,0.96); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px); }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* ─── HEADER ─── */
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 5%; height: 64px;
+      background: rgba(8,8,8,0.96); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100; backdrop-filter: blur(20px);
+    }
     .logo { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; letter-spacing: 2px; color: var(--primary); cursor: pointer; text-decoration: none; }
     .logo span { color: var(--text2); }
     nav a { margin: 0 14px; text-decoration: none; color: var(--text2); font-size: 0.83rem; font-weight: 500; transition: color 0.2s; }
@@ -32,6 +45,8 @@
     .btn-cart { background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-family: inherit; display: flex; align-items: center; gap: 6px; transition: all 0.2s; }
     .btn-cart:hover { border-color: var(--primary); }
     .cart-badge { background: var(--primary); color: #000; border-radius: 10px; padding: 1px 6px; font-size: 0.65rem; font-weight: 800; display: none; }
+
+    /* ─── MARKETPLACE ─── */
     .mkt-header { padding: 32px 5% 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
     .mkt-title { font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; }
     .mkt-title span { color: var(--primary); }
@@ -45,10 +60,14 @@
     .cat-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); padding: 7px 16px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-family: inherit; transition: all 0.2s; }
     .cat-btn:hover { border-color: var(--primary); color: var(--primary); }
     .cat-btn.active { background: var(--primary); color: #000; border-color: var(--primary); font-weight: 700; }
+
+    /* Two-column layout */
     .market-layout { display: flex; gap: 24px; padding: 20px 5% 40px; align-items: flex-start; }
     .prod-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
     .market-sidebar { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; }
     @media(max-width:900px) { .market-layout { flex-direction: column; } .market-sidebar { width: 100%; } }
+
+    /* Sidebar Cards */
     .sidebar-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
     .sidebar-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; color: var(--primary); }
     .trending-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
@@ -70,9 +89,11 @@
     .plus-features li { font-size: 0.8rem; padding: 4px 0; color: var(--text2); }
     .btn-plus { width: 100%; background: #ffd700; color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
     .btn-plus:hover { background: #e6c200; }
+
+    /* Product card */
     .prod-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: all 0.25s; }
     .prod-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(232,255,71,0.08); }
-    .prod-img { height: 140px; background: var(--bg4); position: relative; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; background-size: cover; background-position: center; background-repeat: no-repeat; }
+    .prod-img { height: 140px; background: var(--bg4); position: relative; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; background-size: cover; background-position: center; background-repeat: no-repeat; cursor: pointer; }
     .prod-img.has-image { font-size: 0; }
     .prod-badge { position: absolute; top: 10px; left: 10px; background: var(--primary); color: #000; font-size: 0.6rem; font-weight: 800; padding: 2px 7px; border-radius: 10px; font-family: var(--mono); }
     .prod-body { padding: 14px; }
@@ -91,7 +112,76 @@
     .thumb-strip { display: flex; gap: 4px; margin-top: 6px; }
     .thumb-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); }
     .thumb-dot.active { background: var(--primary); }
-    /* Cart & Modals (same as before) */
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 70vh;
+      border-radius: 16px;
+      object-fit: contain;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.7);
+      transition: opacity 0.2s;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      background: none;
+      border: none;
+      color: var(--text2);
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .lightbox-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: white;
+      font-size: 2.5rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-arrow:hover { background: rgba(0,0,0,0.85); }
+    .lightbox-arrow.left { left: -24px; }
+    .lightbox-arrow.right { right: -24px; }
+    .lightbox-arrow:disabled { opacity: 0.3; cursor: default; }
+    .lightbox-counter {
+      color: var(--text3);
+      font-size: 0.85rem;
+      margin-top: 12px;
+      font-family: var(--mono);
+    }
+
+    /* Cart Drawer */
     .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; display: none; }
     .cart-overlay.open { display: block; }
     .cart-drawer { position: fixed; right: 0; top: 0; bottom: 0; width: 380px; max-width: 100vw; background: var(--bg2); border-left: 1px solid var(--border); z-index: 301; transform: translateX(100%); transition: transform 0.3s ease; display: flex; flex-direction: column; }
@@ -115,6 +205,8 @@
     .btn-checkout { width: 100%; background: var(--primary); color: #000; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 700; font-family: inherit; }
     .btn-checkout:hover { background: #d4e840; }
     .btn-checkout:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Modals */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 400; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
     .modal-overlay.open { display: flex; }
     .list-modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; width: 500px; max-width: calc(100vw - 32px); max-height: 90vh; overflow-y: auto; }
@@ -126,6 +218,7 @@
     .form-group label { display: block; font-size: 0.75rem; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--bg4); border: 1px solid var(--border2); color: var(--text); padding: 10px 14px; border-radius: 8px; font-family: inherit; font-size: 0.88rem; }
     .btn-full { width: 100%; background: var(--primary); color: #000; border: none; padding: 13px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+
     /* Multi-image upload */
     .image-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
     .image-slot { border: 2px dashed var(--border2); border-radius: 10px; height: 80px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; background: var(--bg4); transition: border-color 0.2s; overflow: hidden; }
@@ -133,6 +226,8 @@
     .image-slot img { max-width: 100%; max-height: 100%; object-fit: cover; }
     .image-slot .slot-placeholder { color: var(--text3); font-size: 0.7rem; text-align: center; }
     .image-slot input[type="file"] { display: none; }
+
+    /* Chat Modal */
     .chat-modal-container { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; width: 400px; max-width: calc(100vw - 32px); max-height: 600px; display: flex; flex-direction: column; }
     .chat-modal-head { padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
     .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-height: 200px; }
@@ -142,15 +237,26 @@
     .chat-input-area { display: flex; padding: 12px; border-top: 1px solid var(--border); gap: 8px; }
     .chat-input-area input { flex:1; background: var(--bg3); border:1px solid var(--border2); color:var(--text); padding:10px; border-radius:8px; }
     .chat-premium-prompt { padding: 12px; background: var(--primary-dim2); border-top: 1px solid var(--border); font-size:0.8rem; text-align:center; }
+
+    /* Toast */
     .toast { position: fixed; bottom: 28px; right: 28px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; z-index: 999; transform: translateY(80px); opacity: 0; transition: all 0.3s; }
     .toast.show { transform: translateY(0); opacity: 1; }
   </style>
 </head>
 <body>
+<!-- HEADER (same) -->
 <header>
   <a href="index.html" class="logo">CAMPUS<span>CART</span></a>
-  <nav><a href="landing.html">Home</a><a href="landing.html#features">Features</a><a href="landing.html#roadmap">Roadmap</a><a href="landing.html#team">Team</a></nav>
-  <div class="header-actions" id="nav-guest"><button class="btn-sm" onclick="openAuth('login')">Log In</button><button class="btn-sm-primary" onclick="openAuth('register')">Sign Up</button></div>
+  <nav>
+    <a href="landing.html">Home</a>
+    <a href="landing.html#features">Features</a>
+    <a href="landing.html#roadmap">Roadmap</a>
+    <a href="landing.html#team">Team</a>
+  </nav>
+  <div class="header-actions" id="nav-guest">
+    <button class="btn-sm" onclick="openAuth('login')">Log In</button>
+    <button class="btn-sm-primary" onclick="openAuth('register')">Sign Up</button>
+  </div>
   <div id="nav-member" style="display:none" class="nav-user">
     <div class="nav-chip">Hi, <strong id="nav-name"></strong></div>
     <button class="btn-sm" id="plusToggleBtn" onclick="togglePlusSubscription()" style="border-color:#ffd700; color:#ffd700;">⭐ Plus</button>
@@ -166,6 +272,7 @@
 </div>
 <div class="ai-banner"><span>🤖</span><span><strong>AI Match:</strong> Showing items recommended for your course. <span id="ai-course-tag" style="font-family:var(--mono); color:var(--primary);"></span></span></div>
 <div class="ai-banner" id="scamDetectionBanner"></div>
+
 <div class="cat-bar">
   <button class="cat-btn active" onclick="setCat('all',this)">All Items</button>
   <button class="cat-btn" onclick="setCat('books',this)">📚 Books</button>
@@ -175,6 +282,7 @@
   <button class="cat-btn" onclick="setCat('tools',this)">🔧 Tools</button>
   <button class="cat-btn" onclick="setCat('misc',this)">🎒 Misc</button>
 </div>
+
 <div class="market-layout">
   <div class="prod-grid" id="prod-grid"></div>
   <div class="market-sidebar">
@@ -200,9 +308,7 @@
       <div class="form-group"><label>Description</label><input type="text" id="li-desc" placeholder="e.g. Minor highlights"></div>
       <div class="form-group">
         <label>Images (up to 4)</label>
-        <div class="image-slots" id="image-slots">
-          <!-- dynamically filled -->
-        </div>
+        <div class="image-slots" id="image-slots"></div>
       </div>
       <button class="btn-full" onclick="submitListing()">🚀 List Item</button>
     </div>
@@ -214,9 +320,21 @@
   <div class="chat-modal-container"><div class="chat-modal-head"><div style="display:flex; align-items:center; gap:8px;"><span id="chat-seller-avatar" style="font-size:1.8rem;">👤</span><div><div id="chat-seller-name" style="font-weight:600;">Seller Name</div><div style="font-size:0.7rem; color:var(--text3);">Typically replies in a few hours</div></div></div><button class="modal-close-btn" onclick="closeChatModal()">✕</button></div><div class="chat-messages" id="chat-messages"><div class="chat-msg seller">Hi! Is this still available?</div><div class="chat-msg buyer">Yes, it is! When can we meet?</div><div class="chat-msg seller">I'm free tomorrow after 3pm at the library lobby.</div></div><div class="chat-input-area"><input type="text" id="chat-input" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendChatMessage()"><button class="btn-sm-primary" onclick="sendChatMessage()">Send</button></div><div class="chat-premium-prompt" id="chat-premium-prompt" style="display:none;"><p>🔒 Contact details are hidden. <a onclick="subscribeToPlus()">Upgrade to Plus</a> to reveal seller's email and phone.</p></div></div>
 </div>
 
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">&#10005;</button>
+    <button class="lightbox-arrow left" id="lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</button>
+    <img class="lightbox-image" id="lightbox-img" src="" alt="Product image">
+    <button class="lightbox-arrow right" id="lightbox-next" onclick="navigateLightbox(1)">&#10095;</button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
+  // ─── DATA ────────────────────────────────────
   const CAT_ICONS = { books:'📚', electronics:'💻', uniforms:'👕', lab:'🔬', tools:'🔧', misc:'🎒' };
   let PRODUCTS = [
     { id:1, name:'Calculus by Leithold (7th Ed)', cat:'books', price:280, origPrice:800, emoji:'📗', desc:'Minor highlights, complete.', seller:'Maria S.', uni:'TUP', cond:'Good', sellerEmail:'maria.s@tup.edu.ph', sellerPhone:'+63 912 345 6789' },
@@ -236,54 +354,69 @@
   let currentChatSeller = null;
   let selectedImages = [null, null, null, null]; // up to 4
 
+  // Lightbox state
+  let lightboxProduct = null;
+  let lightboxIndex = 0;
+
+  // ─── UI HELPERS ──────────────────────────────
   function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
   function updateHeader() {
-    const g = document.getElementById('nav-guest'), m = document.getElementById('nav-member');
-    if (currentUser) { g.style.display='none'; m.style.display='flex'; document.getElementById('nav-name').textContent=currentUser.name.split(' ')[0]; document.getElementById('ai-course-tag').textContent=currentUser.course+' · '+currentUser.uni; document.getElementById('mkt-subtitle').textContent=`AI-curated for ${currentUser.course} · ${currentUser.uni}`; }
-    else { g.style.display='flex'; m.style.display='none'; document.getElementById('ai-course-tag').textContent='Sign up to personalize'; }
+    const guestNav = document.getElementById('nav-guest'), memberNav = document.getElementById('nav-member');
+    if (currentUser) {
+      guestNav.style.display = 'none'; memberNav.style.display = 'flex';
+      document.getElementById('nav-name').textContent = currentUser.name.split(' ')[0];
+      document.getElementById('ai-course-tag').textContent = currentUser.course + ' · ' + currentUser.uni;
+      document.getElementById('mkt-subtitle').textContent = `AI-curated for ${currentUser.course} · ${currentUser.uni}`;
+    } else {
+      guestNav.style.display = 'flex'; memberNav.style.display = 'none';
+      document.getElementById('ai-course-tag').textContent = 'Sign up to personalize';
+    }
     updateCartBadge(); updateScamBanner(); updateHeaderPlusIndicator(); updateSellButton();
   }
   function updateCartBadge() { const b = document.getElementById('cart-count'); if(cart.length>0){ b.style.display='inline-block'; b.textContent=cart.length; } else b.style.display='none'; }
   function updateSellButton() { const b = document.getElementById('sellBtnText'); if(b) b.textContent = isPlusSubscriber ? '🏷️ + Sell Item' : '🔒 + Sell Item'; }
   function updateHeaderPlusIndicator() {
-    const b = document.getElementById('plusToggleBtn');
-    if(isPlusSubscriber){ b.style.background='#ffd700'; b.style.color='#000'; b.style.borderColor='#ffd700'; b.textContent='⭐ Plus Active'; }
-    else { b.style.background='none'; b.style.color='#ffd700'; b.style.borderColor='#ffd700'; b.textContent='⭐ Plus'; }
-    const s = document.getElementById('subscribeBtn');
-    if(s){ s.textContent=isPlusSubscriber?'✓ Subscribed':'Upgrade to Plus'; s.disabled=isPlusSubscriber; s.style.opacity=isPlusSubscriber?'0.6':'1'; }
+    const btn = document.getElementById('plusToggleBtn');
+    if(isPlusSubscriber){ btn.style.background='#ffd700'; btn.style.color='#000'; btn.style.borderColor='#ffd700'; btn.textContent='⭐ Plus Active'; }
+    else { btn.style.background='none'; btn.style.color='#ffd700'; btn.style.borderColor='#ffd700'; btn.textContent='⭐ Plus'; }
+    const subBtn = document.getElementById('subscribeBtn');
+    if(subBtn){ subBtn.textContent=isPlusSubscriber?'✓ Subscribed':'Upgrade to Plus'; subBtn.disabled=isPlusSubscriber; subBtn.style.opacity=isPlusSubscriber?'0.6':'1'; }
   }
   function updateScamBanner() {
-    const b = document.getElementById('scamDetectionBanner');
-    if(!currentUser){ b.innerHTML='<span>🔒</span><span><strong>AI Scam Detection:</strong> Log in to enable protection.</span>'; b.className='ai-banner'; return; }
-    if(!isPlusSubscriber){ b.innerHTML='<span>⭐</span><span><strong>AI Scam Detection (Premium):</strong> <a onclick="subscribeToPlus()" style="color:var(--primary);cursor:pointer;text-decoration:underline;">Upgrade to CampusCart Plus</a> to unlock scam protection and seller analytics.</span>'; b.className='ai-banner'; }
-    else { b.innerHTML='<span>🛡️</span><span><strong>AI Scam Detection:</strong> ✅ All listings on this page passed our safety checks. No suspicious patterns detected.</span>'; b.className='ai-banner safe'; }
+    const banner = document.getElementById('scamDetectionBanner');
+    if(!currentUser){ banner.innerHTML='<span>🔒</span><span><strong>AI Scam Detection:</strong> Log in to enable protection.</span>'; banner.className='ai-banner'; return; }
+    if(!isPlusSubscriber){ banner.innerHTML='<span>⭐</span><span><strong>AI Scam Detection (Premium):</strong> <a onclick="subscribeToPlus()" style="color:var(--primary);cursor:pointer;text-decoration:underline;">Upgrade to CampusCart Plus</a> to unlock scam protection and seller analytics.</span>'; banner.className='ai-banner'; }
+    else { banner.innerHTML='<span>🛡️</span><span><strong>AI Scam Detection:</strong> ✅ All listings on this page passed our safety checks. No suspicious patterns detected.</span>'; banner.className='ai-banner safe'; }
   }
-  function openAuth(t) { window.location.href=`landing.html?auth=${t}`; }
+  function openAuth(tab) { window.location.href = `landing.html?auth=${tab}`; }
   function doLogout() { currentUser=null; localStorage.removeItem('campus_current_user'); updateHeader(); showToast('👋 Logged out.'); }
+
+  // ─── PLUS SUBSCRIPTION ────────────────────────
   function togglePlusSubscription() { isPlusSubscriber=!isPlusSubscriber; localStorage.setItem('campus_plus_subscriber',JSON.stringify(isPlusSubscriber)); updateScamBanner(); updateHeaderPlusIndicator(); updateSellButton(); renderProds(); showToast(isPlusSubscriber?'✨ Plus features activated!':'Plus subscription removed (demo)'); }
   function subscribeToPlus() { if(!currentUser){ showToast('👋 Please log in to subscribe.'); window.location.href='landing.html?auth=login'; return; } isPlusSubscriber=true; localStorage.setItem('campus_plus_subscriber',JSON.stringify(true)); updateScamBanner(); updateHeaderPlusIndicator(); updateSellButton(); renderProds(); showToast('🎉 You are now a CampusCart Plus member! Selling unlocked, AI Scam Detection enabled.'); }
 
+  // ─── SELL ITEM ───────────────────────────────
   function handleSellItemClick() { if(!currentUser){ window.location.href='landing.html?auth=register'; return; } if(!isPlusSubscriber){ showToast('🔒 Selling is a Premium feature. Please upgrade to CampusCart Plus to start selling.'); document.querySelector('.plus-card').scrollIntoView({behavior:'smooth'}); return; } openListModal(); }
   function openListModal() { if(!currentUser){ window.location.href='landing.html?auth=register'; return; } if(!isPlusSubscriber){ handleSellItemClick(); return; } buildImageSlots(); document.getElementById('list-modal').classList.add('open'); }
   function closeListModal() { document.getElementById('list-modal').classList.remove('open'); clearImages(); }
 
   function resizeImage(file, maxW=200, maxH=200) {
     return new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onload = (e) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
           let w=img.width, h=img.height;
           if(w>maxW||h>maxH){ const ratio=Math.min(maxW/w, maxH/h); w=Math.round(w*ratio); h=Math.round(h*ratio); }
-          const c=document.createElement('canvas'); c.width=w; c.height=h;
-          c.getContext('2d').drawImage(img,0,0,w,h);
-          resolve(c.toDataURL('image/jpeg',0.7));
+          const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h;
+          canvas.getContext('2d').drawImage(img,0,0,w,h);
+          resolve(canvas.toDataURL('image/jpeg',0.7));
         };
         img.onerror=reject;
         img.src=e.target.result;
       };
-      r.onerror=reject;
-      r.readAsDataURL(file);
+      reader.onerror=reject;
+      reader.readAsDataURL(file);
     });
   }
 
@@ -296,7 +429,6 @@
         <input type="file" id="img-input-${i}" accept="image/*" onchange="handleSlotUpload(${i}, event)">
       </div>
     `).join('');
-    // restore existing previews
     selectedImages.forEach((img, i) => { if(img) { const p=document.getElementById(`preview-${i}`); p.src=img; p.style.display='block'; document.getElementById(`placeholder-${i}`).style.display='none'; } });
   }
 
@@ -313,14 +445,10 @@
 
   function clearImages() {
     selectedImages = [null, null, null, null];
-    // reset DOM if modal is open
     [0,1,2,3].forEach(i => {
-      const p = document.getElementById(`preview-${i}`);
-      if(p) { p.src=''; p.style.display='none'; }
-      const pl = document.getElementById(`placeholder-${i}`);
-      if(pl) pl.style.display='block';
-      const inp = document.getElementById(`img-input-${i}`);
-      if(inp) inp.value='';
+      const p = document.getElementById(`preview-${i}`); if(p) { p.src=''; p.style.display='none'; }
+      const pl = document.getElementById(`placeholder-${i}`); if(pl) pl.style.display='block';
+      const inp = document.getElementById(`img-input-${i}`); if(inp) inp.value='';
     });
   }
 
@@ -339,7 +467,9 @@
     renderProds(); showToast('🚀 Item listed!');
   }
 
+  // ─── PRODUCT RENDERING ───────────────────────
   function setCat(cat, btn) { activeCat=cat; document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderProds(); }
+
   function renderProds() {
     const q = (document.getElementById('search-input')?.value||'').toLowerCase();
     let filtered = PRODUCTS.filter(p => (activeCat==='all'||p.cat===activeCat) && (!q||p.name.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)));
@@ -355,7 +485,7 @@
       const thumbDots = images.length > 1 ? `<div class="thumb-strip">${images.map((_,i) => `<div class="thumb-dot ${i===0?'active':''}"></div>`).join('')}</div>` : '';
       return `
       <div class="prod-card">
-        <div class="${imgClass}" style="${imgStyle}">${!hasImage ? p.emoji : ''}</div>
+        <div class="${imgClass}" style="${imgStyle}" onclick="openLightbox(${p.id})">${!hasImage ? p.emoji : ''}</div>
         <div class="prod-body">
           <div class="prod-cat">${CAT_ICONS[p.cat]} ${p.cat} · ${p.cond}</div>
           <div class="prod-name">${p.name}</div>
@@ -372,6 +502,47 @@
     }).join('');
   }
 
+  // ─── LIGHTBOX ────────────────────────────────
+  function openLightbox(productId) {
+    const product = PRODUCTS.find(p => p.id === productId);
+    if (!product) return;
+    lightboxProduct = product;
+    const images = product.images || [];
+    if (images.length === 0) {
+      // fallback: show emoji?
+      showToast('No images to display.');
+      return;
+    }
+    lightboxIndex = 0;
+    updateLightboxImage();
+    document.getElementById('lightbox').classList.add('open');
+    // Show/hide arrows
+    document.getElementById('lightbox-prev').style.display = images.length > 1 ? 'flex' : 'none';
+    document.getElementById('lightbox-next').style.display = images.length > 1 ? 'flex' : 'none';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    lightboxProduct = null;
+  }
+
+  function navigateLightbox(direction) {
+    if (!lightboxProduct) return;
+    const images = lightboxProduct.images || [];
+    if (images.length <= 1) return;
+    lightboxIndex = (lightboxIndex + direction + images.length) % images.length;
+    updateLightboxImage();
+  }
+
+  function updateLightboxImage() {
+    const images = lightboxProduct.images || [];
+    if (images.length === 0) return;
+    const imgElement = document.getElementById('lightbox-img');
+    imgElement.src = images[lightboxIndex];
+    document.getElementById('lightbox-counter').textContent = `${lightboxIndex+1} / ${images.length}`;
+  }
+
+  // ─── CART ────────────────────────────────────
   function addToCart(id) { if(!currentUser){ showToast('👋 Please log in.'); window.location.href='landing.html?auth=login'; return; } const prod = PRODUCTS.find(p=>p.id===id); if(!prod) return; if(cart.some(c=>c.id===id)){ showToast('⚠️ Already in cart!'); return; } cart.push({...prod}); localStorage.setItem('campus_cart',JSON.stringify(cart)); updateCartBadge(); showToast(`✅ Added: ${prod.name}`); }
   function removeFromCart(id) { cart=cart.filter(c=>c.id!==id); localStorage.setItem('campus_cart',JSON.stringify(cart)); updateCartBadge(); renderCartItems(); }
   function toggleCart() { document.getElementById('cart-overlay').classList.toggle('open'); document.getElementById('cart-drawer').classList.toggle('open'); renderCartItems(); }
@@ -384,10 +555,12 @@
   }
   function goCheckout() { if(cart.length) window.location.href='checkout.html'; }
 
+  // ─── CHAT ────────────────────────────────────
   function openChatModal(sellerId) { if(!currentUser){ showToast('👋 Please log in to chat.'); window.location.href='landing.html?auth=login'; return; } const product=PRODUCTS.find(p=>p.id===sellerId); if(!product) return; currentChatSeller=product; document.getElementById('chat-seller-name').textContent=product.seller; document.getElementById('chat-seller-avatar').textContent=product.emoji||'👤'; document.getElementById('chat-messages').innerHTML=`<div class="chat-msg seller">Hi! Is the ${product.name} still available?</div><div class="chat-msg buyer">Yes, it is! When can we meet?</div><div class="chat-msg seller">I'm free tomorrow after 3pm at the library lobby.</div>`; document.getElementById('chat-premium-prompt').style.display=isPlusSubscriber?'none':'block'; document.getElementById('chat-modal').classList.add('open'); }
   function closeChatModal() { document.getElementById('chat-modal').classList.remove('open'); currentChatSeller=null; }
   function sendChatMessage() { const input=document.getElementById('chat-input'); const msg=input.value.trim(); if(!msg) return; const messagesDiv=document.getElementById('chat-messages'); const newMsg=document.createElement('div'); newMsg.className='chat-msg buyer'; newMsg.textContent=msg; messagesDiv.appendChild(newMsg); input.value=''; messagesDiv.scrollTop=messagesDiv.scrollHeight; setTimeout(()=>{ const reply=document.createElement('div'); reply.className='chat-msg seller'; reply.textContent="Great! See you then. Please bring your student ID."; messagesDiv.appendChild(reply); messagesDiv.scrollTop=messagesDiv.scrollHeight; },1000); }
 
+  // ─── INIT ────────────────────────────────────
   document.getElementById('list-modal').addEventListener('click', e=>{ if(e.target.classList.contains('modal-overlay')) closeListModal(); });
   document.getElementById('chat-modal').addEventListener('click', e=>{ if(e.target.classList.contains('modal-overlay')) closeChatModal(); });
   updateHeader(); renderProds();
