@@ -233,11 +233,27 @@
     const dtStr = datetime ? new Date(datetime).toLocaleString('en-PH', {dateStyle:'medium', timeStyle:'short'}) : 'To be arranged';
     const payLabels = { cash:'Cash on Meetup', gcash:'GCash', maya:'Maya' };
 
-    const orderDetails = {
-      name, sid, email, meetup: selectedMeetup, datetime: dtStr, payment: payLabels[payMethod],
-      total, savings, items: cart.length, orderId: 'CC-' + Math.floor(Math.random()*90000+10000)
-    };
-    localStorage.setItem('campus_last_order', JSON.stringify(orderDetails));
+// Create order with timestamp
+const orderDetails = {
+  orderId: 'CC-' + Math.floor(Math.random()*90000+10000),
+  date: new Date().toISOString(),
+  name, sid, email,
+  meetup: selectedMeetup,
+  datetime: dtStr,
+  payment: payLabels[payMethod],
+  gcashNumber: (payMethod !== 'cash') ? gcashNumber : null,
+  total, savings,
+  items: cart.length,
+  cartItems: cart.map(c => ({ name: c.name, price: c.price, emoji: c.emoji })) // Save item details for history
+};
+
+// Save to last order (for success page)
+localStorage.setItem('campus_last_order', JSON.stringify(orderDetails));
+
+// Add to order history
+let history = JSON.parse(localStorage.getItem('campus_order_history')) || [];
+history.unshift(orderDetails); // add to beginning for newest first
+localStorage.setItem('campus_order_history', JSON.stringify(history));
 
     // Clear cart
     localStorage.removeItem('campus_cart');
