@@ -181,7 +181,8 @@
     <div class="nav-chip">Hi, <strong id="nav-name"></strong></div>
     <button class="btn-sm" id="plusToggleBtn" onclick="togglePlusSubscription()" style="border-color:#ffd700; color:#ffd700;">⭐ Plus</button>
     <button class="btn-cart" onclick="toggleCart()"><span>🛒</span> Cart <span class="cart-badge" id="cart-count">0</span></button>
-    <button class="btn-sm" onclick="openListModal()">+ Sell Item</button>
+    <!-- 🔒 SELL BUTTON (Premium Only) -->
+    <button class="btn-sm" id="sellItemBtn" onclick="handleSellItemClick()">+ Sell Item</button>
     <button class="btn-sm" style="color:var(--danger)" onclick="doLogout()">Logout</button>
   </div>
 </header>
@@ -203,7 +204,7 @@
   <span><strong>AI Match:</strong> Showing items recommended for your course. <span id="ai-course-tag" style="font-family:var(--mono); color:var(--primary);"></span></span>
 </div>
 
-<!-- AI SCAM DETECTION BANNER -->
+<!-- AI SCAM DETECTION BANNER (PREMIUM) -->
 <div class="ai-banner" id="scamDetectionBanner"></div>
 
 <div class="cat-bar">
@@ -239,12 +240,15 @@
         </div>
       </div>
     </div>
+    <!-- 🔒 CAMPUSCART PLUS CARD (UPDATED FEATURES) -->
     <div class="sidebar-card plus-card">
       <div class="plus-icon">⭐</div>
       <div class="plus-title">CampusCart Plus</div>
       <div class="plus-price">₱99 / month</div>
       <ul class="plus-features">
+        <li>🏷️ Unlimited Selling</li>
         <li>🛡️ AI Scam Detection</li>
+        <li>📞 View Contact Info</li>
         <li>🚀 Boosted Listings</li>
         <li>📊 Seller Analytics</li>
         <li>✅ Verified Badge</li>
@@ -422,6 +426,43 @@
     showToast('🎉 You are now a CampusCart Plus member! AI Scam Detection enabled.');
   }
 
+  // ─── 🔒 SELL ITEM (PREMIUM ONLY) ─────────────
+  function handleSellItemClick() {
+    if (!currentUser) {
+      window.location.href = 'landing.html?auth=register';
+      return;
+    }
+    if (!isPlusSubscriber) {
+      showToast('🔒 Selling is a Premium feature. Please upgrade to CampusCart Plus to start selling.');
+      document.querySelector('.plus-card').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    openListModal();
+  }
+
+  function openListModal() {
+    if (!currentUser) { window.location.href = 'landing.html?auth=register'; return; }
+    if (!isPlusSubscriber) {
+      handleSellItemClick();
+      return;
+    }
+    document.getElementById('list-modal').classList.add('open');
+  }
+
+  function closeListModal() { document.getElementById('list-modal').classList.remove('open'); }
+  
+  function submitListing() {
+    const name = document.getElementById('li-name').value.trim();
+    const cat = document.getElementById('li-cat').value;
+    const price = parseInt(document.getElementById('li-price').value);
+    const cond = document.getElementById('li-cond').value;
+    const desc = document.getElementById('li-desc').value.trim() || 'Good condition.';
+    if (!name || !price) { showToast('Please fill name and price.'); return; }
+    const emojis = { books:'📗', electronics:'💻', uniforms:'👕', lab:'🔬', tools:'🔧', misc:'🎒' };
+    PRODUCTS.unshift({ id: nextId++, name, cat, price, origPrice: Math.round(price*2.5), emoji: emojis[cat], desc, cond, seller: currentUser.name, uni: currentUser.uni, sellerEmail: currentUser.email, sellerPhone: '+63 9XX XXX XXXX' });
+    closeListModal(); renderProds(); showToast('🚀 Item listed!');
+  }
+
   // ─── PRODUCT RENDERING ───────────────────────
   function setCat(cat, btn) {
     activeCat = cat;
@@ -501,21 +542,6 @@
   }
 
   function goCheckout() { if (cart.length) window.location.href = 'checkout.html'; }
-
-  // ─── SELL ITEM ───────────────────────────────
-  function openListModal() { if (!currentUser) { window.location.href = 'landing.html?auth=register'; return; } document.getElementById('list-modal').classList.add('open'); }
-  function closeListModal() { document.getElementById('list-modal').classList.remove('open'); }
-  function submitListing() {
-    const name = document.getElementById('li-name').value.trim();
-    const cat = document.getElementById('li-cat').value;
-    const price = parseInt(document.getElementById('li-price').value);
-    const cond = document.getElementById('li-cond').value;
-    const desc = document.getElementById('li-desc').value.trim() || 'Good condition.';
-    if (!name || !price) { showToast('Please fill name and price.'); return; }
-    const emojis = { books:'📗', electronics:'💻', uniforms:'👕', lab:'🔬', tools:'🔧', misc:'🎒' };
-    PRODUCTS.unshift({ id: nextId++, name, cat, price, origPrice: Math.round(price*2.5), emoji: emojis[cat], desc, cond, seller: currentUser.name, uni: currentUser.uni, sellerEmail: currentUser.email, sellerPhone: '+63 9XX XXX XXXX' });
-    closeListModal(); renderProds(); showToast('🚀 Item listed!');
-  }
 
   // ─── CHAT ────────────────────────────────────
   function openChatModal(sellerId) {
